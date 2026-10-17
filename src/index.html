@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexora Menu</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #080b16;
+      color: #f4f5ff;
+      font-family: Arial, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .menu {
+      width: 100%;
+      max-width: 360px;
+      background: #101629;
+      border: 1px solid #6c5cff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 30px #6655ff25;
+    }
+
+    header {
+      padding: 22px;
+      background: linear-gradient(120deg, #211c50, #102b42);
+      border-bottom: 1px solid #34365f;
+    }
+
+    .logo {
+      color: #9a8cff;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      color: #a8b1ca;
+      font-size: 12px;
+    }
+
+    .content {
+      padding: 18px;
+    }
+
+    .section {
+      color: #8c96b6;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin: 5px 0 12px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #171f35;
+      padding: 14px;
+      border-radius: 11px;
+      margin-bottom: 10px;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .feature small {
+      display: block;
+      color: #929bb5;
+      margin-top: 5px;
+      font-size: 11px;
+    }
+
+    .switch {
+      width: 43px;
+      height: 24px;
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 20px;
+      background: #343c53;
+      padding: 3px;
+      cursor: pointer;
+    }
+
+    .switch::after {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: white;
+      transition: transform .2s;
+    }
+
+    .switch.active {
+      background: #7865ff;
+    }
+
+    .switch.active::after {
+      transform: translateX(19px);
+    }
+
+    .action {
+      width: 100%;
+      border: 1px solid #7464ff;
+      border-radius: 10px;
+      background: #6c57f5;
+      color: white;
+      padding: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    #status {
+      min-height: 17px;
+      margin: 13px 0 0;
+      color: #a99dff;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer {
+      padding: 13px;
+      text-align: center;
+      color: #77829f;
+      font-size: 10px;
+      border-top: 1px solid #252e46;
+    }
+  </style>
+</head>
+<body>
+  <main class="menu">
+    <header>
+      <div class="logo">NEXORA</div>
+      <div class="subtitle">ROBLOX • CUSTOM MENU DEMO</div>
+    </header>
+
+    <div class="content">
+      <div class="section">INTERFACE SETTINGS</div>
+
+      <div class="feature">
+        <div>
+          <strong>Neon Glow</strong>
+          <small>Toggle the menu glow</small>
+        </div>
+        <button class="switch active"
+          aria-label="Toggle Neon Glow"
+          aria-pressed="true"
+          data-feature="glow"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <strong>Compact Mode</strong>
+          <small>Reduce menu spacing</small>
+        </div>
+        <button class="switch"
+          aria-label="Toggle Compact Mode"
+          aria-pressed="false"
+          data-feature="compact"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <strong>Show Notifications</strong>
+          <small>Display menu status messages</small>
+        </div>
+        <button class="switch active"
+          aria-label="Toggle Notifications"
+          aria-pressed="true"
+          data-feature="notifications"></button>
+      </div>
+
+      <button class="action" id="test">Test Menu</button>
+      <p id="status" role="status">Nexora is ready.</p>
+    </div>
+
+    <footer>NEXORA MENU • VERSION 1.0.0</footer>
+  </main>
+
+  <script>
+    const status = document.getElementById("status");
+
+    document.querySelectorAll(".switch").forEach(button => {
+      button.addEventListener("click", () => {
+        const active = button.classList.toggle("active");
+        button.setAttribute("aria-pressed", String(active));
+
+        const feature = button.dataset.feature;
+
+        if (feature === "glow") {
+          document.querySelector(".menu").style.boxShadow =
+            active ? "0 0 30px #6655ff45" : "none";
+        }
+
+        if (feature === "compact") {
+          document.querySelector(".content").style.padding =
+            active ? "10px" : "18px";
+        }
+
+        if (button.dataset.feature !== "notifications" ||
+            active) {
+          status.textContent =
+            feature + ": " + (active ? "ON" : "OFF");
+        }
+      });
+    });
+
+    document.getElementById("test").addEventListener("click", () => {
+      status.textContent = "All systems operational!";
+    });
+  </script>
+</body>
+</html>
